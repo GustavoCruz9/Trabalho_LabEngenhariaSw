@@ -32,16 +32,14 @@
 	</header>
 
 	<main>
-	
-		<input type="hidden" name="index" id="index"
-				value="">  
+
+
 
 		<form action="index" method="get">
-
 			<c:forEach var="e" items="${eventos}">
-				<div class="grid">
+				<a href="comprarIngresso" class="grid">
 					<div class="cardEvento">
-						<img src="https://tinypic.host/image/imagemCartaz.DSSXuf"
+						<img src ="<c:out value="${e.linkImagem}"></c:out>"
 							alt="Bruno Mars">
 						<div class="card-info">
 							<h2>
@@ -52,7 +50,8 @@
 							</p>
 						</div>
 					</div>
-				</div>
+					<input type="hidden" name="codEvento" id="codEvento" value="${e.codigo}">
+				</a>
 			</c:forEach>
 		</form>
 	</main>

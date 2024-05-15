@@ -13,6 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Evento {
+	private int codigo;
 	private LocalTime horaInicio;
 	private LocalTime horaFim;
 	private LocalDate data;
@@ -20,5 +21,6 @@ public class Evento {
 	private String titulo;
 	private double valorBase;
 	private Funcionario responsavel;
+	private String linkImagem;
 	private List<Artista> artistas = new ArrayList<>();
 }
