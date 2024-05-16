@@ -1,10 +1,11 @@
 package guilherme.kauan.gustavo.TrabalhoEngenhariaSw.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Evento;
+import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.persistence.IndexDao;
 
 @Controller
 public class IndexController {
+
+	@Autowired
+	IndexDao iDao;
 
 	@RequestMapping(name = "/", value = "/", method = RequestMethod.GET)
 	public ModelAndView home(ModelMap model) {
@@ -25,32 +30,74 @@ public class IndexController {
 	@RequestMapping(name = "index", value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexGet(@RequestParam Map<String, String> param, ModelMap model) {
 
-		ArrayList<Evento> eventos = new ArrayList<>();
+		List<Evento> eventos = new ArrayList<>();
+		String erro = "";
 
-		for (int i = 0; i < 9; i++) {
-
-			Evento e = new Evento();
-
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			LocalDate data = LocalDate.parse("22-04-2004", formatter);
-			e.setData(data);
-
-			e.setTitulo("Artista " + i);
-			e.setLinkImagem("https://bn02pap001files.storage.live.com/y4mcAOkgx_aGs9KCfo-H"
-					+ "CfsnbKl2bijtm029GIV7LMgDi6vsI4tjgMrdkoAlmZ6O6xpZvgbVUPDHrwicahCpzUhR-"
-					+ "5af31nz_oMO4pOgjEqYPePPKPUTToxYa7W4UTkbN67ZHSecyKiRgUKJPZkfW6FxLGZ3KW"
-					+ "c4HoDrQnhPkmTaVlO5SB6HwBxhFv5BMS4EQXlPTJ28trd7z3EHNxTOks-yLzOdfFqgfgJ"
-					+ "LC84ZU3ymkM?encodeFailures=1&width=640&height=640");
-
-			eventos.add(e);
+		try {
+			eventos = buscaEventos();
+			if (eventos.isEmpty()) {
+				erro = "Não existem eventos recentes, por favor pesquise pelo nome de um evento";
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			erro = e.getMessage();
+		} finally {
+			model.addAttribute("eventos", eventos);
+			model.addAttribute("erro", erro);
 		}
 
-		model.addAttribute("eventos", eventos);
 		return new ModelAndView("index");
 	}
 
 	@RequestMapping(name = "index", value = "/index", method = RequestMethod.POST)
 	public ModelAndView indexPost(@RequestParam Map<String, String> param, ModelMap model) {
+
+		String cmd = param.get("botao");
+		String pesquisaEvento = param.get("pesquisaEvento");
+
+		List<Evento> eventos = new ArrayList<>();
+		Evento e = new Evento();
+		String saida = "";
+		String erro = "";
+
+		if (cmd.contains("Pesquisar")) {
+			if (pesquisaEvento.trim().isEmpty()) {
+				erro = "Digite o nome de um evento";
+			} else {
+				e.setTitulo(pesquisaEvento);
+			}
+		}
+
+		if (!erro.isEmpty()) {
+			model.addAttribute("erro", erro);
+			return new ModelAndView("index");
+		}
+
+		try {
+			eventos = buscaEventosComParam(e);
+			if (eventos.isEmpty()) {
+				erro = "Não existem eventos com esse nome";
+			}
+		} catch (ClassNotFoundException | SQLException error) {
+			erro = error.getMessage();
+
+		} finally {
+			model.addAttribute("eventos", eventos);
+			model.addAttribute("erro", erro);
+		}
 		return new ModelAndView("index");
+
+	}
+
+	private List<Evento> buscaEventosComParam(Evento e) throws SQLException, ClassNotFoundException {
+		List<Evento> eventos = new ArrayList<>();
+		eventos = iDao.buscaEventosComParam(e);
+		return eventos;
+	}
+
+	private List<Evento> buscaEventos() throws SQLException, ClassNotFoundException {
+
+		List<Evento> eventos = new ArrayList<>();
+		eventos = iDao.buscaEventos();
+		return eventos;
 	}
 }

@@ -4,12 +4,14 @@
 body {
 	font-family: Arial, sans-serif;
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
 	margin: 0;
 	padding: 0;
+	background-color: lightgray;
+	overflow-x: hidden;
 }
 
-header {
+.formHeader {
 	width: 98.94%;
 	height: 80px;
 	background-color: black;
@@ -87,18 +89,39 @@ main {
 	justify-content: center;
 }
 
+.formGrid{
+	width:90%;
+	margin-left:100px;
+}
+
 .cardEvento {
 	width: 250px;
 	background-color: #f0f0f0;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
-	/* Para garantir que a imagem não ultrapasse os limites do card */
+	transition: transform 0.2s;
 }
 
 .cardEvento img {
 	width: 100%;
 	height: auto;
+}
+
+.cardEvento:hover {
+	transform: translateY(-8px);
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
 
 .card-info {
@@ -119,4 +142,8 @@ main {
 .grid {
 	margin: 20px;
 	float: left;
+}
+
+.custom-subimt{
+	cursor: pointer;
 }
