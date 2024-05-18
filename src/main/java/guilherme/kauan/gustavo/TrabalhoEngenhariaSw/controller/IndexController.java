@@ -56,7 +56,6 @@ public class IndexController {
 
 		List<Evento> eventos = new ArrayList<>();
 		Evento e = new Evento();
-		String saida = "";
 		String erro = "";
 
 		if (cmd.contains("Pesquisar")) {
