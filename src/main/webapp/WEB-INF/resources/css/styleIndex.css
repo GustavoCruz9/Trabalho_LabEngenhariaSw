@@ -22,6 +22,34 @@ body {
 	padding: 10px;
 }
 
+nav {
+	background-color: rgb(41, 41, 41);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	padding: 10px;
+}
+
+nav a {
+	color: #feb81c;
+	font-weight: bold;
+	font-size: large;
+}
+
+nav a:hover{
+	color:  rgb(241, 192, 85);
+}
+
+nav input[type="submit"]{
+	background-color: red;
+	border-radius: 10px;
+	border: none;
+	padding: 5px;
+	color: white;
+	cursor: pointer;
+}
+
 img {
 	width: 80px;
 	height: auto;

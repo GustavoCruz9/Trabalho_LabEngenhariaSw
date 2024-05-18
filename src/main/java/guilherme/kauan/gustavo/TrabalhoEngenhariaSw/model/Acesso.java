@@ -10,4 +10,5 @@ import lombok.ToString;
 public class Acesso {
 	 private String usuario;
 	 private String senha;
+	 private int permissao;
 }

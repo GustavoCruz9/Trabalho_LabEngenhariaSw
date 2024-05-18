@@ -26,13 +26,39 @@
 			</div>
 
 			<div class="loginIcon">
-				<a href="fazerLogin"> <img alt="Logo"
-					src="./resources/images/loginIcon.png" class="userIcon">
-					<h3>Login</h3>
+				<a href="login"> <img alt="Logo"
+					src="./resources/images/loginIcon.png" class="userIcon"> <c:if
+						test="${acesso.permissao eq 1 or acesso.permissao eq 2}">
+						<h3>Bem Vindo</h3>
+					</c:if> <c:if test="${acesso.permissao ne 1 and acesso.permissao ne 2}">
+						<h3>Login</h3>
+					</c:if>
 				</a>
 			</div>
 		</form>
 	</header>
+
+	<c:if test="${acesso.permissao eq 1}">
+		<nav>
+			<a href="meusDados">Meus Dados</a> <a href="visualizarIngressos">Visualizar
+				Ingressos</a>
+			<form action="index" method="Post">
+				<input type="submit" value="Deslogar" id="botao" name="botao">
+			</form>
+		</nav>
+	</c:if>
+
+	<c:if test="${acesso.permissao eq 2}">
+		<nav>
+			<a href="meusDados">Meus Dados</a> <a href="#">Cadastrar Evento</a> <a
+				href="#">Cadastrar Artista</a> <a href="cadastrarFuncionario">Cadastrar
+				Funcionario</a>
+			<form action="index" method="Post">
+				<input type="submit" value="Deslogar" id="botao" name="botao">
+			</form>
+		</nav>
+	</c:if>
+
 
 	<main>
 		<form action="index" method="get" class="formGrid">

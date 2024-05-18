@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<a href="index.html"> <img src="./resources/images/LogoSemBackground.png"
+	<a href="index"> <img src="./resources/images/LogoSemBackground.png"
 		alt="">
 	</a>
 

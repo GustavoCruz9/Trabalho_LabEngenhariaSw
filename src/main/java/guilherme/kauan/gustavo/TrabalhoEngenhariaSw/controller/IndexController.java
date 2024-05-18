@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Acesso;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Evento;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.persistence.IndexDao;
 
@@ -29,9 +30,9 @@ public class IndexController {
 
 	@RequestMapping(name = "index", value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexGet(@RequestParam Map<String, String> param, ModelMap model) {
-
+		
 		List<Evento> eventos = new ArrayList<>();
-		String erro = "";
+		String erro = "";		
 
 		try {
 			eventos = buscaEventos();
@@ -50,10 +51,11 @@ public class IndexController {
 
 	@RequestMapping(name = "index", value = "/index", method = RequestMethod.POST)
 	public ModelAndView indexPost(@RequestParam Map<String, String> param, ModelMap model) {
-
+		
 		String cmd = param.get("botao");
 		String pesquisaEvento = param.get("pesquisaEvento");
-
+		
+		
 		List<Evento> eventos = new ArrayList<>();
 		Evento e = new Evento();
 		String erro = "";
@@ -65,7 +67,7 @@ public class IndexController {
 				e.setTitulo(pesquisaEvento);
 			}
 		}
-
+		
 		if (!erro.isEmpty()) {
 			model.addAttribute("erro", erro);
 			return new ModelAndView("index");

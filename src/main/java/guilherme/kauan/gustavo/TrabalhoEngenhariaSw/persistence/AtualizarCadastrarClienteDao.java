@@ -35,7 +35,11 @@ public class AtualizarCadastrarClienteDao implements IAtualizarCadastrarClienteD
 			cs.registerOutParameter(9, Types.VARCHAR);
 			
 			cs.execute();
+			
 			String saida = cs.getString(9);
+			
+			cs.close();
+			C.close();
 			return saida;
 	}
 }

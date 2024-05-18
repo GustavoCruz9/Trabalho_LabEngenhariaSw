@@ -8,7 +8,8 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Funcionario {
-	private int registro;
+	private String registro;
 	private String nome;
 	private String cargo;
+	private Acesso acesso;
 }
