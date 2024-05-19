@@ -35,7 +35,7 @@
 		<nav>
 			<a href="meusDados">Meus Dados</a> <a href="visualizarIngressos">Visualizar
 				Ingressos</a>
-			<form action="index" method="Post">
+			<form action="login" method="Post">
 				<input type="submit" value="Deslogar" id="botao" name="botao">
 			</form>
 		</nav>
@@ -46,7 +46,7 @@
 			<a href="meusDados">Meus Dados</a> <a href="#">Cadastrar Evento</a> <a
 				href="#">Cadastrar Artista</a> <a href="cadastrarFuncionario">Cadastrar
 				Funcionario</a>
-			<form action="index" method="Post">
+			<form action="login" method="Post">
 				<input type="submit" value="Deslogar" id="botao" name="botao">
 			</form>
 		</nav>
@@ -138,7 +138,7 @@
 						<td colspan="">
 							<div class="content">
 								<label for="nome">Nome:</label> <input type="text" name="nome"
-									id="nome" value="${funcionario.nome}">
+									id="nome" value="${funcionario.nome}" readonly>
 							</div>
 						</td>
 					</tr>
@@ -146,7 +146,7 @@
 						<td colspan="1">
 							<div class="content">
 								<label for="cargo">Cargo</label> <input type="text" name="cargo"
-									id="cargo" value="${funcionario.cargo}">
+									id="cargo" value="${funcionario.cargo}" readonly>
 							</div>
 						</td>
 					</tr>

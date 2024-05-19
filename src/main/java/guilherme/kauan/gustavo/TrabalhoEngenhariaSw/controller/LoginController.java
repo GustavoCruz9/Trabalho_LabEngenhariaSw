@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Acesso;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.persistence.LoginDao;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 
 @Controller
 public class LoginController {
@@ -46,24 +47,41 @@ public class LoginController {
 			acesso.setSenha(senha);
 		}
 		
+		
 		try {
-			Object saidas[] = fazerLogin(acesso);
-			 saida = (String) saidas[0];
-			 acesso = (Acesso) saidas[1];
-			 if(!saida.equals("Logou")) {
-				 acesso = null;
-			 }
+			if(cmd.equals("Entrar")) {
+				Object saidas[] = fazerLogin(acesso);
+				saida = (String) saidas[0];
+				acesso = (Acesso) saidas[1];
+				if(!saida.equals("Logou")) {
+					acesso = null;
+				}			
+			}
+			
+			if(cmd.equals("Deslogar")) {
+				session = deslogar(session);
+				erro = "Você deslogou, redirecionando para página principal...";
+				model.addAttribute("erro", erro);
+				return new ModelAndView("index");
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			erro = e.getMessage();
 		}finally {
 			model.addAttribute("saida", saida);
 			model.addAttribute("erro", erro);
-			if(acesso != null) {
-				session.setAttribute("acesso", acesso);
-				return new ModelAndView(new RedirectView("index"));
+			if(cmd.equals("Entrar")) {
+				if(acesso != null) {
+					session.setAttribute("acesso", acesso);
+					return new ModelAndView(new RedirectView("index"));
+				}
 			}
 		}
 		return new ModelAndView("login");
+	}
+
+	private HttpSession deslogar(HttpSession session) {
+		session.invalidate();
+		return session;
 	}
 
 	private Object[] fazerLogin(Acesso acesso) throws ClassNotFoundException, SQLException {

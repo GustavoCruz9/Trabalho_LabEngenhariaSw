@@ -22,6 +22,9 @@ public class IndexController {
 
 	@Autowired
 	IndexDao iDao;
+	
+	@Autowired
+	LoginController lc;
 
 	@RequestMapping(name = "/", value = "/", method = RequestMethod.GET)
 	public ModelAndView home(ModelMap model) {

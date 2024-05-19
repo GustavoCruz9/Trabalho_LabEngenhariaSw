@@ -19,7 +19,7 @@ public class Evento {
 	private LocalDate data;
 	private String genero;
 	private String titulo;
-	private double valorBase;
+	private double valor;
 	private Funcionario responsavel;
 	private String linkImagem;
 	private List<Artista> artistas = new ArrayList<>();

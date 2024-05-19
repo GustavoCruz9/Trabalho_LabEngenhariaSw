@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* Estilos para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: lightgray;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+header {
+	width: 98.94%;
+	height: 80px;
+	background-color: black;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+}
+
+img {
+	width: 80px;
+	height: auto;
+}
+
+/* Estilos para a barra de pesquisa */
+.search-bar {
+	background-color: white;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	border: none;
+	border-radius: 50px;
+	width: 25%;
+}
+
+/* Estilos para o campo de entrada de texto */
+.search-input {
+	flex: 1;
+	padding: 8px;
+	outline: none;
+	border: none;
+}
+
+/* Estilos para o botão de pesquisa (lupa) */
+.search-button {
+	background-color: #007bff;
+	color: #fff;
+	padding: 8px 15px;
+	border: none;
+	border-radius: 5px;
+	margin-left: 5px;
+	cursor: pointer;
+}
+
+a {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	text-decoration: none;
+	color: black;
+}
+
+h3 {
+	margin-left: 15px;
+	color: white;
+	margin-right: 20px;
+}
+
+div.loginIcon a img {
+	width: 50px;
+}
+
+div.search-bar input[type="submit"] {
+	background-color: white;
+	border: none;
+}
+
+main {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+}
+
+.left, .right{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.left img {
+    width: 70%;
+}

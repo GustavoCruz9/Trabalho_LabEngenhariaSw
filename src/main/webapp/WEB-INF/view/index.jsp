@@ -42,7 +42,7 @@
 		<nav>
 			<a href="meusDados">Meus Dados</a> <a href="visualizarIngressos">Visualizar
 				Ingressos</a>
-			<form action="index" method="Post">
+			<form action="login" method="Post">
 				<input type="submit" value="Deslogar" id="botao" name="botao">
 			</form>
 		</nav>
@@ -63,10 +63,10 @@
 	<main>
 		<form action="index" method="get" class="formGrid">
 			<c:forEach var="e" items="${eventos}">
-				<a href="comprarIngresso" class="grid">
+				<a href="realizarCompra?codEvento=${e.codigo}" class="grid">
 					<div class="cardEvento">
 						<img src="<c:out value="${e.linkImagem}"></c:out>"
-							alt="Bruno Mars">
+							alt="<c:out value="${e.titulo}"></c:out>">
 						<div class="card-info">
 							<h2>
 								<c:out value="${e.titulo}"></c:out>
@@ -75,8 +75,7 @@
 								<c:out value="${e.data}"></c:out>
 							</p>
 						</div>
-					</div> <input type="hidden" name="codEvento" id="codEvento"
-					value="${e.codigo}">
+					</div> 
 				</a>
 			</c:forEach>
 		</form>
