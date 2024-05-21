@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class GenericDao {
+	
 	private Connection c;
 
 	public Connection getConnection() throws SQLException, ClassNotFoundException{

@@ -50,9 +50,8 @@
 
 	<c:if test="${acesso.permissao eq 2}">
 		<nav>
-			<a href="meusDados">Meus Dados</a> <a href="#">Cadastrar Evento</a> <a
-				href="#">Cadastrar Artista</a> <a href="cadastrarFuncionario">Cadastrar
-				Funcionario</a>
+			<a href="meusDados">Meus Dados</a> <a href="cadastrarEvento">Cadastrar Evento</a> <a
+				href="cadastrarArtista">Cadastrar Artista</a> 
 			<form action="index" method="Post">
 				<input type="submit" value="Deslogar" id="botao" name="botao">
 			</form>

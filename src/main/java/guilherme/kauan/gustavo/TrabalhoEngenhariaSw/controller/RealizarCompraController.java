@@ -51,6 +51,7 @@ public class RealizarCompraController {
 	public ModelAndView realizarCompraPost(@RequestParam Map<String, String> param, ModelMap model, HttpSession sessionIngressos, HttpSession session) {
 
 
+		@SuppressWarnings("unchecked")
 		List<Ingresso> ingressos = (List<Ingresso>) sessionIngressos.getAttribute("ingressos");
 	    if (ingressos == null) {
 	        ingressos = new ArrayList<>();

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Acesso;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.persistence.LoginDao;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 
 @Controller
 public class LoginController {
