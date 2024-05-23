@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-/* Estilos para o corpo da página */
 body {
 	font-family: Arial, sans-serif;
 	background-color: lightgray;
@@ -30,7 +29,6 @@ img {
 	height: auto;
 }
 
-/* Estilos para a barra de pesquisa */
 .search-bar {
 	background-color: white;
 	padding: 10px;
@@ -41,7 +39,6 @@ img {
 	width: 25%;
 }
 
-/* Estilos para o campo de entrada de texto */
 .search-input {
 	flex: 1;
 	padding: 8px;
@@ -49,7 +46,6 @@ img {
 	border: none;
 }
 
-/* Estilos para o botão de pesquisa (lupa) */
 .search-button {
 	background-color: #007bff;
 	color: #fff;
@@ -91,7 +87,7 @@ nav {
 	align-items: center;
 	justify-content: space-around;
 	padding: 10px;
-    width: 100%;
+	width: 100%;
 }
 
 nav a {
@@ -100,15 +96,15 @@ nav a {
 	font-size: large;
 }
 
-nav a:hover{
-	color:  rgb(241, 192, 85);
+nav a:hover {
+	color: rgb(241, 192, 85);
 }
 
 .deslogar {
-    width: 0%;
+	width: 0%;
 }
 
-nav input[type="submit"]{
+nav input[type="submit"] {
 	background-color: red;
 	border-radius: 10px;
 	border: none;
@@ -121,94 +117,199 @@ main {
 	width: 80%;
 	height: 100%;
 	display: flex;
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
 	flex-direction: column;
 	padding: 30px;
 }
 
 form {
-    width: 100%;
-    display: flex;
-    align-items: center;
+	width: 100%;
+	display: flex;
+	align-items: center;
 	flex-direction: column;
 }
 
 form table input[type="text"] {
-    width: 100%;
+	width: 100%;
 }
 
-form table input[type="text"], form table input[type="number"],
-form table input[type="date"], form table input[type="time"]{
-    font-size: large;
-    border: none;
-    border-radius: 50px;
-    padding: 10px;
-    margin-bottom: 10px;
+form table input[type="text"],
+form table input[type="number"],
+form table input[type="date"],
+form table input[type="time"] {
+	font-size: large;
+	border: none;
+	border-radius: 50px;
+	padding: 10px;
+	margin-bottom: 10px;
+	width: 90%;
+}
+
+form table input[type="time"] {
+	text-align: center;
+	width: 80%;
+	font-size: 15px;
+}
+
+form table input[type="date"]{
+	text-align: center;
+	width: 80%;
+	font-size: 15px;
+}
+
+form table select {
+	font-size: large;
+	border: none;
+	border-radius: 50px;
+	padding: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	text-align: center;
 }
 
 form table td {
-    text-align: center;
+	text-align: center;
+}
+
+.botoes {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
 }
 
 form table label {
-    font-weight: bold;
-    font-size: large;
-    margin-right: 20px;
+	font-weight: bold;
+	font-size: 17px;
+	margin-right: 10px;
+	width: 20%;
 }
 
-form table input[type="submit"] {
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    width: 80%;
-    font-weight: 400;
-    font-size: 20px;
-    background-color: #feb81c;
-    margin: 5px;
+form table .botoes input[type="submit"],
+form table input[type="submit"]{
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+	width: 80%;
+	font-weight: 400;
+	font-size: 20px;
+	background-color: #feb81c;
+	margin: 5px;
 }
 
 form table input[type="submit"]:hover {
-    background-color: rgb(241, 192, 85);
-    box-shadow: 0px 0px 0px rgba(241, 192, 85, 1);
+	background-color: rgb(241, 192, 85);
+	box-shadow: 0px 0px 0px rgba(241, 192, 85, 1);
 }
 
-.tabelaArtistas{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.tabelaArtistas {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex-direction: column;
+	margin-top: 50px;
 }
 
 .tabelaArtistas table {
-    width: 80%;
-    margin: 20px 0;
-    border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	width: 80%;
+	border-collapse: collapse;
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .tabelaArtistas thead th {
-    background-color: #feb81c;
-    color: black;
-    padding: 10px;
-    text-align: center;
+	background-color: #feb81c;
+	color: black;
+	padding: 10px;
+	text-align: center;
+}
+
+.esquerda, .direita {
+	width: 48%;	
+	margin-left: 5%;
 }
 
 .tabelaArtistas tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
 
 .tabelaArtistas tbody tr:hover {
-    background-color: #ddd;
+	background-color: #ddd;
 }
 
-.tabelaArtistas td, .tabelaArtistas th {
-    border: 1px solid #ddd;
-    padding: 10px;
+.tabelaArtistas td,
+.tabelaArtistas th {
+	border: 1px solid #ddd;
+	padding: 10px;
 }
 
-.tabelaArtistas td{
-    text-align: center;
+.tabelaArtistas td {
+	text-align: center;
+}
+
+.table-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+}
+
+table {
+	border-collapse: collapse;
+	width: 48%;
+}
+
+th,
+td {
+	padding: 8px;
+	text-align: center;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+/* .btn {
+	display: flex;
+	justify-content: center;
+	width: 30%;
+} */
+
+.table-container .btn input {
+	padding: 5px 10px;
+	font-weight: 400;
+	font-size: 15px;
+	width: 50%;
+}
+
+.esquerda input[type="submit"]{
+	padding: 5px;
+	border: none;
+	border-radius: 10px;
+	width: 30%;
+	font-weight: 400;
+	font-size: 20px;
+	background-color: #feb81c;
+	margin: 5px;
+}
+
+.esquerda table input[type="submit"]{
+	padding: 5px;
+	border: none;
+	border-radius: 10px;
+	width: 70%;
+	font-weight: 400;
+	font-size: 20px;
+	background-color: #feb81c;
+	margin: 5px;
+}
+
+.esquerda input[type="text"]{
+	font-size: large;
+	border: none;
+	border-radius: 50px;
+	padding: 10px;
+	margin-bottom: 10px;
+	width: 40%;
 }

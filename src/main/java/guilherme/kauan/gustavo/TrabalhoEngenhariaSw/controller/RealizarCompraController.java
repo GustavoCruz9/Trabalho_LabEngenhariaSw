@@ -26,11 +26,23 @@ public class RealizarCompraController {
 	RealizarCompraDao rcDao;
 
 	@RequestMapping(name = "realizarCompra", value = "/realizarCompra", method = RequestMethod.GET)
-	public ModelAndView realizarCompraGet(@RequestParam Map<String, String> param, ModelMap model) {
+	public ModelAndView realizarCompraGet(@RequestParam Map<String, String> param, ModelMap model, HttpSession session) {
+		
+		Acesso acesso = new Acesso();
+	    acesso = (Acesso) session.getAttribute("acesso");
+	    
+		String erro = "";
+	    
+	    if(acesso.getPermissao() == 2) {
+	    	erro = "Funcionário não pode realizar compra de ingressos";
+	    	model.addAttribute("erro", erro);
+	    	session.setAttribute("acesso", acesso);
+	    	return new ModelAndView("index");
+	    }
 
 		String codEvento = param.get("codEvento");
 
-		String erro = "";
+
 
 		Evento evento = new Evento();
 		evento.setCodigo(Integer.parseInt(codEvento));

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Acesso;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Evento;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.persistence.IndexDao;
 
@@ -34,7 +35,7 @@ public class IndexController {
 	public ModelAndView indexGet(@RequestParam Map<String, String> param, ModelMap model) {
 		
 		List<Evento> eventos = new ArrayList<>();
-		String erro = "";		
+		String erro = "";
 
 		try {
 			eventos = buscaEventos();

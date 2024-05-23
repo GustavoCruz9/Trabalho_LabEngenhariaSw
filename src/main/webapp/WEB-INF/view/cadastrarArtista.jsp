@@ -18,8 +18,8 @@
 
 		<div class="search-bar">
 			<input type="text" class="search-input"
-				placeholder="Digite sua pesquisa..."> <input type="submit"
-				class="custom-submit" value="Pesquisar">
+				placeholder="Digite sua pesquisa..."/> <input type="submit"
+				class="custom-submit" value="Pesquisar"/>
 		</div>
 
 		<div class="loginIcon">
@@ -27,9 +27,10 @@
 				src="./resources/images/loginIcon.png" class="userIcon">
 			<c:if test="${acesso.permissao eq 1 or acesso.permissao eq 2}">
 					<h3>Bem Vindo</h3>
-				</c:if> <c:if test="${acesso.permissao ne 1 and acesso.permissao ne 2}">
+			</c:if>
+			<c:if test="${acesso.permissao ne 1 and acesso.permissao ne 2}">
 					<h3>Login</h3>
-				</c:if>
+			</c:if>
 			</a>
 		</div>
 	</header>
@@ -66,9 +67,9 @@
 		</div>
 		<div align="center">
 			<c:if test="${not empty saida }">
-				<h3>
+				<h2>
 					<b><c:out value="${saida }" /></b>
-				</h3>
+				</h2>
 			</c:if>
 		</div>
 		<form action="cadastrarArtista" method="post" class="meusDados">

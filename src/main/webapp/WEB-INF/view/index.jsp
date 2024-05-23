@@ -27,8 +27,8 @@
 
 			<div class="loginIcon">
 				<a href="login"> <img alt="Logo"
-					src="./resources/images/loginIcon.png" class="userIcon"> <c:if
-						test="${acesso.permissao eq 1 or acesso.permissao eq 2}">
+					src="./resources/images/loginIcon.png" class="userIcon"> 
+					<c:if test="${acesso.permissao eq 1 or acesso.permissao eq 2}">
 						<h3>Bem Vindo</h3>
 					</c:if> <c:if test="${acesso.permissao ne 1 and acesso.permissao ne 2}">
 						<h3>Login</h3>
