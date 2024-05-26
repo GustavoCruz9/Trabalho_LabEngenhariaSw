@@ -22,5 +22,6 @@ public class Evento {
 	private double valor;
 	private Funcionario responsavel;
 	private String linkImagem;
+	private String statusEvento;
 	private List<Artista> artistas = new ArrayList<>();
 }

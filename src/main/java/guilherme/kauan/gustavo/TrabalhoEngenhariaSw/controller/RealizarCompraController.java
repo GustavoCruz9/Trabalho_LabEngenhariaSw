@@ -33,7 +33,7 @@ public class RealizarCompraController {
 	    
 		String erro = "";
 	    
-	    if(acesso.getPermissao() == 2) {
+	    if(acesso != null && acesso.getPermissao() == 2) {
 	    	erro = "Funcionário não pode realizar compra de ingressos";
 	    	model.addAttribute("erro", erro);
 	    	session.setAttribute("acesso", acesso);

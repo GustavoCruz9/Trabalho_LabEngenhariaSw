@@ -11,7 +11,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Acesso;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Artista;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Evento;
+import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.model.Funcionario;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.persistence.CadastrarArtistaDao;
 import guilherme.kauan.gustavo.TrabalhoEngenhariaSw.persistence.CadastrarEventoDao;
 import jakarta.servlet.http.HttpSession;
@@ -34,14 +34,42 @@ public class CadastrarEvento {
 	CadastrarArtistaDao caDao;
 
 	@RequestMapping(name = "cadastrarEvento", value = "/cadastrarEvento", method = RequestMethod.GET)
-	public ModelAndView cadastrarEventoGet(@RequestParam Map<String, String> param, ModelMap model) {
+	public ModelAndView cadastrarEventoGet(@RequestParam Map<String, String> param, ModelMap model, HttpSession session) {
+
+		String codEvento = param.get("codEvento");
+
+		Acesso acesso = new Acesso();
+		acesso = (Acesso) session.getAttribute("acesso");
+
+		String erro = "";
+
+		List<Artista> artistas = new ArrayList<>();
+		List<Artista> artistasEvento = new ArrayList<>();
+		Evento evento = new Evento();
+
+		try {
+			artistas = listaArtistas();
+			if (codEvento != null) {
+				evento.setCodigo(Integer.parseInt(codEvento));
+				evento = buscaEvento(evento);
+				artistasEvento = evento.getArtistas();
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			erro = e.getMessage();
+		} finally {
+			model.addAttribute("artistas", artistas);
+			if (codEvento != null) {
+				model.addAttribute("artistasEvento", artistasEvento);
+				model.addAttribute("evento", evento);
+			}
+		}
 
 		return new ModelAndView("cadastrarEvento");
 	}
 
 	@RequestMapping(name = "cadastrarEvento", value = "/cadastrarEvento", method = RequestMethod.POST)
 	public ModelAndView cadastrarEventoPost(@RequestParam Map<String, String> param, ModelMap model,
-			HttpSession session, HttpSession sessionListaArtista, @ModelAttribute Evento eventoEntity) {
+			HttpSession session, HttpSession sessionListaArtista) {
 
 		@SuppressWarnings("unchecked")
 		List<Artista> artistasEvento = (List<Artista>) sessionListaArtista.getAttribute("artistasEvento");
@@ -53,7 +81,6 @@ public class CadastrarEvento {
 		String codigo = param.get("codigo");
 		String titulo = param.get("titulo");
 		String linkImagem = param.get("linkImagem");
-		String genero = param.get("genero");
 		String valorBase = param.get("valorBase");
 		String horaInicio = param.get("horaInicio");
 		String horaFim = param.get("horaFim");
@@ -62,6 +89,7 @@ public class CadastrarEvento {
 		String codigoArtista = param.get("codigoArtista");
 		String nomeArtista = param.get("nomeArtista");
 		String generoArtista = param.get("generoArtista");
+		String statusEvento = param.get("statusEvento");
 
 		Artista artista = new Artista();
 		List<Artista> artistas = new ArrayList<>();
@@ -69,6 +97,8 @@ public class CadastrarEvento {
 		Evento evento = new Evento();
 		List<Evento> eventos = new ArrayList<>();
 
+		Funcionario funcionario = new Funcionario();
+		
 		String saida = "";
 		String erro = "";
 
@@ -77,71 +107,134 @@ public class CadastrarEvento {
 		Acesso acesso = new Acesso();
 		acesso = (Acesso) session.getAttribute("acesso");
 
-		if (!cmd.equals("Listar")) {
-			if (cmd.equals("Cadastrar Artistas") || cmd.equals("Atualizar Artistas")) {
-				if (codigo.trim().isEmpty() || titulo.trim().isEmpty() || linkImagem.trim().isEmpty()
-						|| genero.trim().isEmpty() || valorBase.trim().isEmpty() || horaInicio.trim().isEmpty()
-						|| horaFim.trim().isEmpty() || data.trim().isEmpty()) {
+		if (cmd.equals("Cadastrar") || cmd.equals("Atualizar") 
+			||  cmd.equals("Adicionar") ||  cmd.equals("Remover") ) {
+			if (codigo.trim().isEmpty() || titulo.trim().isEmpty() || linkImagem.trim().isEmpty()
+					|| valorBase.trim().isEmpty() || horaInicio.trim().isEmpty() || horaFim.trim().isEmpty()
+					|| data.trim().isEmpty()) {
 
-					erro = "Por favor, preencha todos os campos obrigatorios.";
-				}
-			}
-			if (cmd.equals("Buscar")) {
-				if (codigo.trim().isEmpty()) {
-					erro = "Para buscar insira um codigo";
-				} else {
-					evento.setCodigo(Integer.parseInt(codigo));
-				}
+				erro = "Por favor, preencha todos os campos obrigatorios.";
 			}
 		}
+
+		if (cmd.equals("Buscar")) {
+			if (codigo.trim().isEmpty()) {
+				erro = "Para buscar insira um codigo";
+			} else {
+				evento.setCodigo(Integer.parseInt(codigo));
+			}
+		}
+
+		if (cmd.equals("Cadastrar") || cmd.equals("Atualizar")) {
+			if (artistasEvento.isEmpty()) {
+				erro = "Um evento deve possuir pelo menos um artista";
+			}
+		}
+		
 
 		if (!erro.isEmpty()) {
+			try {
+				artistas = listaArtistas();
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 			model.addAttribute("erro", erro);
+			model.addAttribute("artista", artista);
+			model.addAttribute("artistas", artistas);
+			model.addAttribute("evento", evento);
+			if (acesso != null) {
+				session.setAttribute("acesso", acesso);
+			}
+			if (!artistasEvento.isEmpty()) {
+				sessionListaArtista.setAttribute("artistasEvento", artistasEvento);
+			}
 			return new ModelAndView("cadastrarEvento");
 		}
-
-		if (cmd.equals("Cadastrar Artistas") || cmd.equals("Atualizar Artistas")) {			
+		
+		if(!cmd.equals("Buscar")) {
 			evento.setCodigo(Integer.parseInt(codigo));
 			evento.setTitulo(titulo);
 			evento.setLinkImagem(linkImagem);
-			evento.setGenero(genero);
 			evento.setValor(Double.parseDouble(valorBase));
 			evento.setHoraInicio(LocalTime.parse(horaInicio));
 			evento.setHoraFim(LocalTime.parse(horaFim));
 			evento.setData(LocalDate.parse(data, formatter));
+			if(statusEvento != null) {
+				evento.setStatusEvento(statusEvento);
+			}
 		}
 		
+
 		try {
 			if (cmd.equals("Buscar")) {
 				evento = buscaEvento(evento);
-			}
-			if (cmd.equals("Cadastrar Artistas")) {
-				sp_iEvento(evento, artistas);				
+				artistasEvento = evento.getArtistas();
 				artistas = listaArtistas();
-			}
-			if (cmd.equals("Atualizar Artistas")) {
-				artistas = listaArtistas();
-			}
-			if (cmd.equals("Cadastrar")) {
-				sp_iEvento(evento, artistas);
-			}
-			if (cmd.equals("Atualizar")) {
-				 sp_uEvento(evento, artistas);
+				
 			}
 			if (cmd.equals("Pesquisar")) {
 				artistas = listaArtistasComParam(pesquisarArtista);
 			}
 			if (cmd.equals("Adicionar")) {
+
+				boolean status = true;
+
 				artista = new Artista();
 				artista.setCodigo(Integer.parseInt(codigoArtista));
 				artista.setNome(nomeArtista);
 				artista.setGenero(generoArtista);
-				artistasEvento.add(artista);
+				for (Artista a : artistasEvento) {
+					if (artista.getCodigo() == a.getCodigo()) {
+						erro = "Este artista ja esta inserido no evento";
+						status = false;
+					}
+				}
+				if (status == true) {
+					artistasEvento.add(artista);
+				}
 				artistas = listaArtistas();
 			}
-			if (cmd.equals("Excluir")) {
-				artistasEvento.remove(0);
+			if (cmd.equals("Remover")) {
+				artista = new Artista();
+				artista.setCodigo(Integer.parseInt(codigoArtista));
+				for (int i = 0; i < artistasEvento.size(); i++) {
+					if (artista.getCodigo() == artistasEvento.get(i).getCodigo()) {
+						artistasEvento.remove(i);
+					}
+				}
+				artistas = listaArtistas();
 			}
+
+			if (cmd.equals("Cadastrar")) {
+				if(!statusEvento.equalsIgnoreCase("Inativo")) {
+					
+					funcionario.setAcesso(acesso);
+					evento.setResponsavel(funcionario);
+					evento.setArtistas(artistasEvento);
+					
+					evento.setGenero(insereGenero(artistasEvento));
+					
+					saida = sp_iEvento(evento);
+					
+					sessionListaArtista.removeAttribute("artistasEvento");
+					artistasEvento = new ArrayList<>();
+					evento = new Evento();
+					artistas = new ArrayList<>();
+				}else {
+					erro = "Não é possivel cadastrar um evento com status inativo";
+				}
+			}
+
+			if (cmd.equals("Atualizar")) {
+				
+				funcionario.setAcesso(acesso);
+				evento.setResponsavel(funcionario);				
+				evento.setArtistas(artistasEvento);
+				evento.setGenero(insereGenero(artistasEvento));
+				
+				saida = sp_uEvento(evento);
+			}
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			erro = e.getMessage();
 		} finally {
@@ -150,7 +243,6 @@ public class CadastrarEvento {
 			model.addAttribute("artista", artista);
 			model.addAttribute("artistas", artistas);
 			model.addAttribute("evento", evento);
-			model.addAttribute("evento", eventoEntity);
 			if (acesso != null) {
 				session.setAttribute("acesso", acesso);
 			}
@@ -162,7 +254,37 @@ public class CadastrarEvento {
 		return new ModelAndView("cadastrarEvento");
 	}
 
-	private List<Artista> listaArtistasComParam(String pesquisarArtista) {
+	private String insereGenero(List<Artista> artistasEvento) {
+		String generosEvento = "";
+		boolean status = true;
+
+		List<String> generos = new ArrayList<>();
+
+		for (int i = 0; i < artistasEvento.size(); i++) {
+			for (int j = 0; j < generos.size(); j++) {	
+				if (artistasEvento.get(i).getGenero().equalsIgnoreCase(generos.get(j))) {
+					status = false;
+					break;
+				} else {
+					status = true;
+				}
+			}
+			if (status == true) {
+				generos.add(artistasEvento.get(i).getGenero());
+			}
+		}
+
+		for (int i = 0; i < generos.size(); i++) {
+			if (generos.size() - 1 == i) {
+				generosEvento += generos.get(i);
+			} else {
+				generosEvento += generos.get(i) + ", ";
+			}
+		}
+		return generosEvento;
+	}
+
+	private List<Artista> listaArtistasComParam(String pesquisarArtista) throws SQLException, ClassNotFoundException {
 		return ceDao.listaArtistasComParam(pesquisarArtista);
 	}
 
@@ -170,12 +292,12 @@ public class CadastrarEvento {
 		return ceDao.buscaEvento(evento);
 	}
 
-	private void sp_uEvento(Evento evento, List<Artista> artistas) throws SQLException, ClassNotFoundException {
-		ceDao.sp_iuEvento("U", evento, artistas);
+	private String sp_uEvento(Evento evento) throws SQLException, ClassNotFoundException {
+		return ceDao.sp_iuEvento("U", evento);
 	}
 
-	private void sp_iEvento(Evento evento, List<Artista> artistas) throws SQLException, ClassNotFoundException {
-		 ceDao.sp_iuEvento("I", evento, artistas);
+	private String sp_iEvento(Evento evento) throws SQLException, ClassNotFoundException {
+		return ceDao.sp_iuEvento("I", evento);
 	}
 
 	private List<Artista> listaArtistas() throws SQLException, ClassNotFoundException {

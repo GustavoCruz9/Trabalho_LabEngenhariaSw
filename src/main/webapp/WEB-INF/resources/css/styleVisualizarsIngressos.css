@@ -1,0 +1,193 @@
+@charset "UTF-8";
+
+/* Estilos para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: lightgray;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+header {
+    width: 98.94%;
+    height: 80px;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+img {
+    width: 80px;
+    height: auto;
+}
+
+/* Estilos para a barra de pesquisa */
+.search-bar {
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 50px;
+    width: 25%;
+}
+
+/* Estilos para o campo de entrada de texto */
+.search-input {
+    flex: 1;
+    padding: 8px;
+    outline: none;
+    border: none;
+}
+
+/* Estilos para o botão de pesquisa (lupa) */
+.search-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+h3 {
+    margin-left: 15px;
+    color: white;
+    margin-right: 20px;
+}
+
+div.loginIcon a img {
+    width: 50px;
+}
+
+div.search-bar input[type="submit"] {
+    background-color: white;
+    border: none;
+}
+
+nav {
+	background-color: rgb(41, 41, 41);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	padding: 10px;
+	width: 100%;
+}
+
+nav a {
+	color: #feb81c;
+	font-weight: bold;
+	font-size: large;
+}
+
+nav a:hover {
+	color: rgb(241, 192, 85);
+}
+
+.deslogar {
+	width: 0%;
+}
+
+nav input[type="submit"] {
+	background-color: red;
+	border-radius: 10px;
+	border: none;
+	padding: 5px;
+	color: white;
+	cursor: pointer;
+}
+
+main {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+select {
+	width: 20%;
+	font-size: large;
+	border: none;
+	border-radius: 50px;
+	padding: 5px;
+	margin-bottom: 20px;
+	text-align: center;
+	margin-left: 5px;
+}
+
+.ingresso {
+    width: 100%;
+    background-color: white;
+    border-radius: 15px;
+    /* box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.ingresso h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.conteudo p {
+    width: 48%; /* Ajusta para que os itens fiquem lado a lado */
+    margin: 10px 0;
+    color: #000;
+    font-weight: bold;
+}
+
+.conteudo p span {
+    font-weight: bold;
+    color: #000;
+    font-weight: lighter;
+}
+
+.cancel-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cancel-button:hover {
+    background-color: #c0392b;
+}

@@ -49,12 +49,19 @@
 		<div class="cima">
 
 			<div class="left">
+                <h1>${evento.titulo}</h1>
 				<img src="<c:out value="${evento.linkImagem}"></c:out>"
 				alt="<c:out value="${evento.titulo}"></c:out>">
+                <img src="./images/imagemCartaz.png" alt="">
+                <div class="artistas">
+                    <p> Artista(s): </p>
+                   	<c:forEach var="a" items="${evento.artistas}">
+                        <span>${a.nome} | </span>
+                    </c:forEach>
+                </div>
 			</div>
 
 			<div class="right">
-				<h1>${evento.titulo}</h1>
 				<div align="center">
                     <c:if test="${not empty erro }">
                         <h2>
@@ -77,20 +84,11 @@
 				<div class="conteudo">
 					<div class="direita">
 						<form action="realizarCompra" method="get">
-							<p>Genero:</p>
-							<span>${evento.genero}</span>
-							<p>Artista(s):</p>
-							<c:forEach var="a" items="${evento.artistas}">
-								<span>${a.nome}</span>
-								<br>
-							</c:forEach>
-							</p>
-							<p>Hora de Inicio:</p>
-							<span>${evento.horaInicio}</span>
-							<p>Hora de Fim:</p>
-							<span>${evento.horaFim}</span>
-							<p>Data:</p>
-							<span>${evento.data}</span> <input type="hidden" id="codEvento"
+							<p>Genero: <span>${evento.genero}</span> </p>
+							<p>Hora de Inicio: <span>${evento.horaInicio}</span></p>
+							<p>Hora de Fim: <span>${evento.horaFim}</span></p>
+							<p>Data: <span>${evento.data}</span> </p>
+								<input type="hidden" id="codEvento"
 								name="codEvento" value="${evento.codigo}" />
 						</form>
 
@@ -105,14 +103,7 @@
 
 						<form id="realizarCompraForm" action="realizarCompra" method="post">
 							<div class="tipoLocal">
-								<select name="tipo" id="tipo" onchange="submitForm()">
-									<option disabled ${ingresso.tipo==null?'selected' : '' }>Tipo</option>
-									<option value="inteira"
-										${ingresso.tipo=='inteira' ? 'selected' : '' }>Inteira
-									</option>
-									<option value="meia"
-										${ingresso.tipo=='meia' ? 'selected' : '' }>Meia</option>
-								</select> <select name="setor" id="setor" onchange="submitForm()">
+								<select name="setor" id="setor" onchange="submitForm()">
 									<option disabled ${ingresso.setor==null?'selected' : '' }>Setor</option>
 									<option value="Pista"
 										${ingresso.setor=='Pista' ? 'selected' : '' }>Pista</option>
@@ -123,6 +114,14 @@
 										${ingresso.setor=='Camarote' ? 'selected' : '' }>Camarote
 									</option>
 								</select>
+								<select name="tipo" id="tipo" onchange="submitForm()">
+									<option disabled ${ingresso.tipo==null?'selected' : '' }>Tipo</option>
+									<option value="inteira"
+										${ingresso.tipo=='inteira' ? 'selected' : '' }>Inteira
+									</option>
+									<option value="meia"
+										${ingresso.tipo=='meia' ? 'selected' : '' }>Meia</option>
+								</select> 
 							</div>
 
 							<input type="hidden" id="codEvento" name="codEvento"

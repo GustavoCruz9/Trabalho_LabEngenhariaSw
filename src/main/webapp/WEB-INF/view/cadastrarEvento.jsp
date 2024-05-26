@@ -56,7 +56,7 @@
 	</c:if>
 
 	<main>
-		<h1>Cadastro de Evento:</h1>
+		<h1>Cadastro de Evento</h1>
 		<div align="center">
 			<c:if test="${not empty erro }">
 				<h2>
@@ -67,10 +67,10 @@
 		</div>
 		<div align="center">
 			<c:if test="${not empty saida }">
-				<h3>
+				<h2>
 					<b> <c:out value="${saida }" />
 					</b>
-				</h3>
+				</h2>
 			</c:if>
 		</div>
 		<form action="cadastrarEvento" method="post" class="meusDados">
@@ -80,7 +80,7 @@
 						placeholder="Codigo"
 						value='<c:out value="${evento.codigo}"></c:out>'></td>
 					<td colspan="1"><input type="submit" name="botao" id="botao"
-						value="Buscar"></td>
+						value="Buscar"></td>	
 				</tr>
 				<tr>
 					<td colspan="3"><input type="text" name="titulo" id="titulo"
@@ -93,9 +93,22 @@
 						value='<c:out value="${evento.linkImagem}"></c:out>'></td>
 				</tr>
 				<tr>
-					<td colspan="3"><input type="text" name="genero" id="genero"
-						placeholder="Genero"
-						value='<c:out value="${evento.genero}"></c:out>'></td>
+					<td>
+						<select name="statusEvento" id="statusEvento">
+						    <c:choose>
+						        <c:when test="${empty evento.statusEvento}">
+						            <option value='<c:out value="${evento.statusEvento}"></c:out>' disabled selected>Selecione o status do evento</option>
+						            <option value="Ativo">Ativo</option>
+						            <option value="Inativo">Inativo</option>
+						        </c:when>
+						        <c:otherwise>
+						            <option value='<c:out value="${evento.statusEvento}"></c:out>' disabled>Selecione o status do evento</option>
+						            <option value="Ativo" <c:if test="${evento.statusEvento == 'Ativo'}">selected</c:if>>Ativo</option>
+						            <option value="Inativo" <c:if test="${evento.statusEvento == 'Inativo'}">selected</c:if>>Inativo</option>
+						        </c:otherwise>
+						    </c:choose>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="3"><input type="number" id="valorBase"
@@ -115,17 +128,8 @@
 				</tr>
 				<tr>
 				</tr>
-				<tr>
-					<td colspan="3">
-						<div class="botoes">
-							<input type="submit" value="Cadastrar Artistas" id="botao"
-								name="botao"> <input type="submit"
-								value="Atualizar Artistas" id="botao" name="botao">
-						</div>
-					</td>
-				</tr>
 			</table>
-		</form>
+		
 			<div class="tabelaArtistas">
 				<div class="table-container">
 					<div class="esquerda">
@@ -147,8 +151,23 @@
 										<td><c:out value="${ae.codigo}"></c:out></td>
 										<td><c:out value="${ae.nome}"></c:out></td>
 										<td><c:out value="${ae.genero}"></c:out></td>
-										<td><input type="submit" value="Remover" id="botao"
-											name="botao" /></td>
+										<td>
+												<form action="cadastrarEvento" method="post" class="meusDados">
+												<input type="hidden" id="codigoArtista" name="codigoArtista" value="${ae.codigo}" /> 
+												<input type="hidden" id="nomeArtista" name="nomeArtista" value="${ae.nome}" /> 
+												<input type="hidden" id="generoArtista" name="generoArtista" value="${ae.genero}" /> 
+												<input type="hidden" id="codigo" name="codigo" value="${evento.codigo}" /> 
+												<input type="hidden" id="titulo" name="titulo" value="${evento.titulo}" /> 
+												<input type="hidden" id="linkImagem" name="linkImagem" value="${evento.linkImagem}" /> 
+												<input type="hidden" id="genero" name="genero" value="${evento.genero}" /> 
+												<input type="hidden" id="valorBase" name="valorBase" value="${evento.valor}" /> 
+												<input type="hidden" id="horaInicio" name="horaInicio" value="${evento.horaInicio}" /> 
+												<input type="hidden" id="horaFim" name="horaFim" value="${evento.horaFim}" /> 
+												<input type="hidden" id="data" name="data" value="${evento.data}" /> 
+												<input type="hidden" id="statusEvento" name="statusEvento" value="${evento.statusEvento}" /> 
+												<input type="submit" value="Remover" id="botao" name="botao" />
+												</form>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -172,6 +191,7 @@
 								</tr>
 							</thead>
 							<tbody>
+							
 								<c:forEach var="a" items="${artistas}">
 									<tr>
 										<td><c:out value="${a.codigo}"></c:out></td>
@@ -179,12 +199,19 @@
 										<td><c:out value="${a.genero}"></c:out></td>
 										<td>
 											<form action="cadastrarEvento" method="post" class="meusDados">
-												<input type="hidden" id="codigoArtista" name="codigoArtista"
-													value="${a.codigo}" /> 
-													<input type="hidden" id="nomeArtista" name="nomeArtista" value="${a.nome}" /> 
-													<input type="hidden" id="generoArtista" name="generoArtista" value="${a.genero}" />
-													<input type="hidden" id="eventoEntity" name="eventoEntity" value="${evento}" />
-													<input type="submit" value="Adicionar" id="botao" name="botao" />
+											<input type="hidden" id="codigoArtista" name="codigoArtista" value="${a.codigo}" /> 
+											<input type="hidden" id="nomeArtista" name="nomeArtista" value="${a.nome}" /> 
+											<input type="hidden" id="generoArtista" name="generoArtista" value="${a.genero}" /> 
+											<input type="hidden" id="codigo" name="codigo" value="${evento.codigo}" /> 
+											<input type="hidden" id="titulo" name="titulo" value="${evento.titulo}" /> 
+											<input type="hidden" id="linkImagem" name="linkImagem" value="${evento.linkImagem}" /> 
+											<input type="hidden" id="genero" name="genero" value="${evento.genero}" /> 
+											<input type="hidden" id="valorBase" name="valorBase" value="${evento.valor}" /> 
+											<input type="hidden" id="horaInicio" name="horaInicio" value="${evento.horaInicio}" /> 
+											<input type="hidden" id="horaFim" name="horaFim" value="${evento.horaFim}" /> 
+											<input type="hidden" id="data" name="data" value="${evento.data}" />
+											<input type="hidden" id="statusEvento" name="statusEvento" value="${evento.statusEvento}" /> 
+											<input type="submit" value="Adicionar"id="botao" name="botao" />
 											</form>
 										</td>
 									</tr>
@@ -194,8 +221,10 @@
 					</div>
 				</div>
 			</div>
-		
+			<input type="submit" value="Cadastrar" id="botao" name="botao" />
+			<input type="submit" value="Atualizar" id="botao" name="botao" />
 	</main>
+	</form>
 </body>
 
 </html>

@@ -52,7 +52,7 @@
 		<nav>
 			<a href="meusDados">Meus Dados</a> <a href="cadastrarEvento">Cadastrar Evento</a> <a
 				href="cadastrarArtista">Cadastrar Artista</a> 
-			<form action="index" method="Post">
+			<form action="login" method="Post">
 				<input type="submit" value="Deslogar" id="botao" name="botao">
 			</form>
 		</nav>
@@ -61,6 +61,7 @@
 
 	<main>
 		<form action="index" method="get" class="formGrid">
+		<c:if test="${acesso.permissao eq 1 || acesso == null}">
 			<c:forEach var="e" items="${eventos}">
 				<a href="realizarCompra?codEvento=${e.codigo}" class="grid">
 					<div class="cardEvento">
@@ -77,6 +78,25 @@
 					</div> 
 				</a>
 			</c:forEach>
+		</c:if>
+		<c:if test="${acesso.permissao eq 2}">
+			<c:forEach var="e" items="${eventos}">
+				<a href="cadastrarEvento?codEvento=${e.codigo}" class="grid">
+					<div class="cardEvento">
+						<img src="<c:out value="${e.linkImagem}"></c:out>"
+							alt="<c:out value="${e.titulo}"></c:out>">
+						<div class="card-info">
+							<h2>
+								<c:out value="${e.titulo}"></c:out>
+							</h2>
+							<p>
+								<c:out value="${e.data}"></c:out>
+							</p>
+						</div>
+					</div> 
+				</a>
+			</c:forEach>
+		</c:if>
 		</form>
 	</main>
 

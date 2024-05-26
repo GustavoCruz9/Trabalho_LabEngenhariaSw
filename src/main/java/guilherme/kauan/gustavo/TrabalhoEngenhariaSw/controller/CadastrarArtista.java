@@ -25,7 +25,20 @@ public class CadastrarArtista {
 	CadastrarArtistaDao caDao;
 
 	@RequestMapping(name = "cadastrarArtista", value = "/cadastrarArtista", method = RequestMethod.GET)
-	public ModelAndView cadastrarArtistaGet(@RequestParam Map<String, String> param, ModelMap model) {
+	public ModelAndView cadastrarArtistaGet(@RequestParam Map<String, String> param, ModelMap model, HttpSession session) {
+		
+		Acesso acesso = new Acesso();
+	    acesso = (Acesso) session.getAttribute("acesso");
+	    
+		String erro = "";
+	    
+	    if(acesso == null) {
+	    	erro = "Para acessar essa tela precisa estar logado";
+	    	model.addAttribute("erro", erro);
+	    	session.setAttribute("acesso", acesso);
+	    	return new ModelAndView("index");
+	    }
+
 
 		return new ModelAndView("cadastrarArtista");
 	}

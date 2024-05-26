@@ -74,26 +74,63 @@ public class RealizarCompraDao implements IRealizarCompraDao {
 	public String finalizarCompra(List<Ingresso> ingressos, Acesso acesso) throws SQLException, ClassNotFoundException {
 
 		Connection c = gDao.getConnection();
-
-		int notaFiscal = cadastrarCompra(ingressos, acesso);
-
-		for(Ingresso ingresso : ingressos) {
-			String sql = "insert into Ingresso (preco, tipo, setor, eventoCodigo, notaFiscal) values (?, ?, ?, ?, ?)";
+		
+		int contadorPista = 0;
+		int contadorFrontStage = 0;
+		int contadorCamarote = 0;
+        
+        for (Ingresso ingresso : ingressos) {
+          
+            if (ingresso.getTipo().equalsIgnoreCase("Pista")) {
+                contadorPista++;
+            }
+            if (ingresso.getTipo().equalsIgnoreCase("FrontStage")) {
+            	contadorFrontStage++;
+            }
+            if (ingresso.getTipo().equalsIgnoreCase("Camarote")) {
+            	contadorCamarote++;
+            }         
+        }
+        
+        String sql = "{CALL sp_verificaIngresso(?, ?, ?, ?, ?)}";
+        
+        CallableStatement cs = c.prepareCall(sql);
+		
+        cs.setInt(1, contadorPista);
+        cs.setInt(2, contadorCamarote);
+        cs.setInt(3, contadorFrontStage);
+        cs.setInt(4, ingressos.get(0).getCodigo());
+        cs.registerOutParameter(5, Types.INTEGER);
+        
+        cs.execute();
+		int status = cs.getInt(5);
+		cs.close();
+		
+		
+		if(status == 1) {
 			
-			PreparedStatement ps = c.prepareStatement(sql);
+			int notaFiscal = cadastrarCompra(ingressos, acesso);
 			
-			ps.setDouble(1, ingresso.getPreco());
-			ps.setString(2, ingresso.getTipo());
-			ps.setString(3, ingresso.getSetor());
-			ps.setInt(4, ingresso.getEvento().getCodigo());
-			ps.setInt(5, notaFiscal);
+			for(Ingresso ingresso : ingressos) {
+				sql = "insert into Ingresso (preco, tipo, setor, eventoCodigo, notaFiscal) values (?, ?, ?, ?, ?)";
+				
+				PreparedStatement ps = c.prepareStatement(sql);
+				
+				ps.setDouble(1, ingresso.getPreco());
+				ps.setString(2, ingresso.getTipo());
+				ps.setString(3, ingresso.getSetor());
+				ps.setInt(4, ingresso.getEvento().getCodigo());
+				ps.setInt(5, notaFiscal);
+				
+				ps.execute();
+			}
 			
-			ps.execute();	
+			c.close();
+			return "Ingresso comprado com sucesso";
+		}else {
+			c.close();
+			return null;
 		}
-		
-		c.close();
-		
-		return "Ingresso comprado com sucesso";
 	}
 
 	private int cadastrarCompra(List<Ingresso> ingressos, Acesso acesso) throws SQLException, ClassNotFoundException {
