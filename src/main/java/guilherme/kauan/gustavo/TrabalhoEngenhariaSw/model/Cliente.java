@@ -17,7 +17,5 @@ public class Cliente {
 	private String email;
 	private LocalDate dataNascimento;
 	private String endereco;
-	private String usuario;
-	private String senha;
 	private Acesso acesso;
 }

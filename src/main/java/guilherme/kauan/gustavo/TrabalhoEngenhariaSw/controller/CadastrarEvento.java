@@ -233,6 +233,11 @@ public class CadastrarEvento {
 				evento.setGenero(insereGenero(artistasEvento));
 				
 				saida = sp_uEvento(evento);
+				
+				sessionListaArtista.removeAttribute("artistasEvento");
+				artistasEvento = new ArrayList<>();
+				evento = new Evento();
+				artistas = new ArrayList<>();
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {

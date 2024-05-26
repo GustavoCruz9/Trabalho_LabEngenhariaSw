@@ -26,6 +26,7 @@ public class IndexDao implements IIndexDao{
 		Connection c = gDao.getConnection();
 		String sql = """
 				Select Top(8) codigo, titulo, dataEvento, linkImagem from Evento 
+				where statusEvento like 'Ativo'
 				Order By dataEvento desc
 				""";
 		
