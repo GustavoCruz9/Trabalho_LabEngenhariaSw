@@ -16,12 +16,6 @@
 		<a href="./index"><img alt="Logo"
 			src="./resources/images/LogoIconSemBackground.png"></a>
 
-		<div class="search-bar">
-			<input type="text" class="search-input"
-				placeholder="Digite sua pesquisa..."/> <input type="submit"
-				class="custom-submit" value="Pesquisar"/>
-		</div>
-
 		<div class="loginIcon">
 			<a href="login"> <img alt="Logo"
 				src="./resources/images/loginIcon.png" class="userIcon">

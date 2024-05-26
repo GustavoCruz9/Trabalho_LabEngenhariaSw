@@ -17,12 +17,6 @@
 		<a href="index"><img alt="Logo"
 			src="./resources/images/LogoIconSemBackground.png"></a>
 
-		<div class="search-bar">
-			<input type="text" class="search-input"
-				placeholder="Digite sua pesquisa..."> <input type="submit"
-				class="custom-submit" value="Pesquisar">
-		</div>
-
 		<div class="loginIcon">
 			<a href="login"> <img alt="Logo"
 				src="./resources/images/loginIcon.png" class="userIcon"> <c:if
@@ -76,7 +70,7 @@
 		<form action="cadastrarEvento" method="post" class="meusDados">
 			<table>
 				<tr>
-					<td colspan="2"><input type="number" name="codigo" id="codigo"
+					<td colspan="2">&nbsp&nbsp&nbsp&nbsp<input type="number" name="codigo" id="codigo"
 						placeholder="Codigo"
 						value='<c:out value="${evento.codigo}"></c:out>'></td>
 					<td colspan="1"><input type="submit" name="botao" id="botao"
@@ -93,7 +87,7 @@
 						value='<c:out value="${evento.linkImagem}"></c:out>'></td>
 				</tr>
 				<tr>
-					<td>
+					<td colspan="2">
 						<select name="statusEvento" id="statusEvento">
 						    <c:choose>
 						        <c:when test="${empty evento.statusEvento}">
@@ -109,9 +103,7 @@
 						    </c:choose>
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<td colspan="3"><input type="number" id="valorBase"
+					<td colspan="1"><input class="valorBase" type="number" id="valorBase"
 						name="valorBase" min="0" step="0.01" placeholder="Valor Base"
 						value='<c:out value="${evento.valor}"></c:out>'></td>
 				</tr>
@@ -221,8 +213,10 @@
 					</div>
 				</div>
 			</div>
-			<input type="submit" value="Cadastrar" id="botao" name="botao" />
-			<input type="submit" value="Atualizar" id="botao" name="botao" />
+			<div class="botoesBaixo">
+				<input type="submit" value="Cadastrar" id="botao" name="botao" />
+				<input type="submit" value="Atualizar" id="botao" name="botao" />
+			</div>
 	</main>
 	</form>
 </body>
