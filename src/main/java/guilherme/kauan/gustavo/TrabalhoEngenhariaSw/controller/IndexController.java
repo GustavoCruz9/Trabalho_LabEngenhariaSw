@@ -36,7 +36,7 @@ public class IndexController {
 		try {
 			eventos = buscaEventos();
 			if (eventos.isEmpty()) {
-				erro = "Não existem eventos recentes, por favor pesquise pelo nome de um evento";
+				erro = "Não existem eventos cadastrados";
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			erro = e.getMessage();

@@ -32,7 +32,7 @@ public class CadastrarArtista {
 	    
 		String erro = "";
 	    
-	    if(acesso == null) {
+	    if(acesso == null || acesso.getPermissao() == 1) {
 	    	erro = "Para acessar essa tela precisa estar logado";
 	    	model.addAttribute("erro", erro);
 	    	session.setAttribute("acesso", acesso);

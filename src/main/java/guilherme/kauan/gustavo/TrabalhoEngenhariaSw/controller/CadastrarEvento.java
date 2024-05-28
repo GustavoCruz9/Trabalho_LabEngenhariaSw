@@ -34,17 +34,27 @@ public class CadastrarEvento {
 	CadastrarArtistaDao caDao;
 
 	@RequestMapping(name = "cadastrarEvento", value = "/cadastrarEvento", method = RequestMethod.GET)
-	public ModelAndView cadastrarEventoGet(@RequestParam Map<String, String> param, ModelMap model, HttpSession session) {
-
-		String codEvento = param.get("codEvento");
-
+	public ModelAndView cadastrarEventoGet(@RequestParam Map<String, String> param, ModelMap model, HttpSession session,
+			HttpSession sessionListaArtista) {
+		
 		Acesso acesso = new Acesso();
-		acesso = (Acesso) session.getAttribute("acesso");
-
-		String erro = "";
+	    acesso = (Acesso) session.getAttribute("acesso");
+	    String erro = "";
+		
+		if(acesso == null || acesso.getPermissao() == 1) {
+	    	erro = "Para acessar essa tela precisa estar logado";
+	    	model.addAttribute("erro", erro);
+	    	session.setAttribute("acesso", acesso);
+	    	return new ModelAndView("index");
+	    }
+		
+		@SuppressWarnings("unchecked")
+		List<Artista> artistasEvento = (List<Artista>) sessionListaArtista.getAttribute("artistasEvento");
+		artistasEvento = new ArrayList<>();
+		
+		String codEvento = param.get("codEvento");		
 
 		List<Artista> artistas = new ArrayList<>();
-		List<Artista> artistasEvento = new ArrayList<>();
 		Evento evento = new Evento();
 
 		try {
@@ -58,8 +68,8 @@ public class CadastrarEvento {
 			erro = e.getMessage();
 		} finally {
 			model.addAttribute("artistas", artistas);
+			sessionListaArtista.setAttribute("artistasEvento", artistasEvento);
 			if (codEvento != null) {
-				model.addAttribute("artistasEvento", artistasEvento);
 				model.addAttribute("evento", evento);
 			}
 		}

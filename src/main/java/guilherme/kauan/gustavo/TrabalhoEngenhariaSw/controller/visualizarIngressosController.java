@@ -30,6 +30,7 @@ public class visualizarIngressosController {
 		
 		List<Evento> eventos = new ArrayList<>();
 		String erro = "";
+		String saida = "";
 		
 		Acesso acesso = new Acesso();
 		acesso = (Acesso) session.getAttribute("acesso");
@@ -43,10 +44,14 @@ public class visualizarIngressosController {
 
 		try {
 			eventos = buscaEvento(acesso);
+			if(eventos.isEmpty()) {
+				saida = "Você não possui ingressos disponíveis no momento.";
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			erro = e.getMessage();
 		} finally {
 			model.addAttribute("erro", erro);
+			model.addAttribute("saida", saida);
 			model.addAttribute("eventos", eventos);
 			if (acesso != null) {
 				session.setAttribute("acesso", acesso);

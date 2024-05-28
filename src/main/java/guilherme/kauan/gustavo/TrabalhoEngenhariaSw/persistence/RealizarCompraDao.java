@@ -31,8 +31,9 @@ public class RealizarCompraDao implements IRealizarCompraDao {
 		String sql = """
 				Select Distinct e.*, a.nome
 				from Evento e, Artista a, Evento_Artista ea
-				where e.codigo = ea.eventoCodigo and
-				e.codigo = ?
+				where e.codigo = ea.eventoCodigo 
+				and a.codigo = ea.artistaCodigo 
+				and e.codigo = ?
 				""";
 
 		PreparedStatement ps = c.prepareStatement(sql);

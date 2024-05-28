@@ -47,7 +47,25 @@
         </nav>
     </c:if>
 	    <main>
-		    	<div class="right">
+	    
+	    	<script>
+					function submitForm() {
+						document.getElementById("visualizarIngressosForm")
+						.submit();
+					}
+			</script>
+	    	
+	    	<form id="visualizarIngressosForm" action="visualizarIngressos" method="post">
+	        <select name="eventoCodigo" id="eventoCodigo" onchange="submitForm()">
+	            <option disabled selected>Selecione um evento</option>
+	            <c:forEach var="e" items="${eventos}">
+					<option value="${e.codigo}">
+						<c:out value="${e.titulo}" />
+					</option>
+				</c:forEach>
+	        </select>
+	        
+	        <div class="right">
 					<div align="center">
 	                    <c:if test="${not empty erro }">
 	                        <h2>
@@ -67,23 +85,8 @@
 	                        </h2>
 	                    </c:if>
 	                </div>
-	    
-	    	<script>
-					function submitForm() {
-						document.getElementById("visualizarIngressosForm")
-						.submit();
-					}
-			</script>
-	    	
-	    	<form id="visualizarIngressosForm" action="visualizarIngressos" method="post">
-	        <select name="eventoCodigo" id="eventoCodigo" onchange="submitForm()">
-	            <option disabled selected>Selecione um evento</option>
-	            <c:forEach var="e" items="${eventos}">
-					<option value="${e.codigo}">
-						<c:out value="${e.titulo}" />
-					</option>
-				</c:forEach>
-	        </select>
+	        
+	        
 	        <c:if test="${not empty ingressos}">
 	        	<c:forEach var="i" items="${ingressos}">
 		        <div class="ingresso">
