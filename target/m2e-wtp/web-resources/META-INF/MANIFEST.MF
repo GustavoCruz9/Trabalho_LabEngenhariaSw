@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Build-Jdk-Spec: 18
-Implementation-Title: TrabalhoEngenhariaSw
-Implementation-Version: 1.0
+Implementation-Title: TrabalhoEngenhariaSoftware
+Implementation-Version: 0.0.1-SNAPSHOT
 Created-By: Maven Integration for Eclipse
 
