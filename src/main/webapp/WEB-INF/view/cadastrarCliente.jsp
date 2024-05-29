@@ -8,8 +8,7 @@
 <meta charset="UTF-8">
 <title>Eclipse Lounge - Tela de Login</title>
 <link rel="stylesheet" type="text/css"
-	href='<c:url value = "./resources/css/styleTelaLogin.css"/>'>
-<link rel="stylesheet" href="./resources/css/styleCadastrarCliente.css">
+	href='<c:url value = "./resources/css/styleCadastrarCliente.css"/>'>
 </head>
 <body>
 
